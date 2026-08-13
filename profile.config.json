@@ -3,6 +3,11 @@
   "username": "huzaifalabs",
   "headline": "Full-Stack Developer",
   "tagline": "Building clean, scalable web applications with modern technologies",
+  "typing_roles": [
+    "Full-Stack Developer",
+    "Open Source Contributor",
+    "Python & JavaScript"
+  ],
   "accent_color": "#10b981",
   "accent_color_light": "#34d399",
   "avatar_url": "https://github.com/huzaifalabs.png",
