@@ -1,14 +1,20 @@
 #!/usr/bin/env python3
 """
-Generate SVG dashboard assets - COOL EDITION
+Generate SVG dashboard assets - COOL EDITION v2
 
-Produces visually striking SVGs with:
-  - Animated gradient banners with wave motion
-  - Neon glow effects via SVG filters
-  - Shimmer animations on progress bars
-  - Animated typing with cursor
-  - Glowing stat cards with glassmorphism
-  - Smooth bar chart animations
+GitHub-safe SVGs: NO <filter> elements (GitHub strips them).
+Uses gradients, opacity animations, layered shapes, and
+animate (SMIL) for visual effects instead.
+
+Produces:
+  assets/stats/banner.svg       — animated gradient banner with waves
+  assets/stats/typing-card.svg   — animated typing with cursor
+  assets/stats/terminal-card.svg  — sleek terminal card
+  assets/stats/skills.svg        — custom skill pills
+  assets/stats/github-stats.svg  — glowing stat cards
+  assets/stats/languages.svg     — language progress bars
+  assets/stats/activity.svg      — weekly activity bars
+  assets/stats/wave-divider.svg  — section divider
 """
 
 import json
@@ -19,7 +25,7 @@ import xml.etree.ElementTree as ET
 from xml.dom import minidom
 
 
-# ── Design System v2 — Neon Dark ─────────────────────────────
+# ── Design System v2 — Neon Dark (GitHub-safe) ──────────────
 C = {
     "bg":           "#0a0a0f",
     "surface":      "#12121a",
@@ -52,27 +58,6 @@ LANG_COLORS = {
     "SCSS":       "#C6538C",
 }
 
-SKILL_ICONS = {
-    "Python":     "",  # We'll use colored dots
-    "JavaScript": "",
-    "TypeScript": "",
-    "HTML5":      "",
-    "CSS3":       "",
-    "React":      "",
-    "Next.js":    "",
-    "Node.js":    "",
-    "Express":    "",
-    "FastAPI":    "",
-    "PostgreSQL": "",
-    "MongoDB":    "",
-    "SQLite":     "",
-    "Git":        "",
-    "GitHub":     "",
-    "VS Code":    "",
-    "Linux":      "",
-    "Docker":     "",
-}
-
 SKILL_COLORS = {
     "Python":     "#3572A5", "JavaScript": "#f1e05a", "TypeScript": "#3178C6",
     "HTML5":      "#E34F26", "CSS3":      "#1572B6", "React":      "#61DAFB",
@@ -83,7 +68,7 @@ SKILL_COLORS = {
 }
 
 
-def svg_str(elem: ET.Element) -> str:
+def svg_str(elem):
     rough = ET.tostring(elem, encoding="unicode")
     parsed = minidom.parseString(rough)
     lines = [l for l in parsed.toprettyxml(indent="  ").split("\n") if l.strip()]
@@ -106,21 +91,8 @@ def T(p, x, y, txt, fill, sz=14, w="400", anc="start", ff=FF):
     return el
 
 
-def add_neon_filter(defs, filter_id="neonGlow", color=C["accent"]):
-    """Add a neon glow SVG filter."""
-    f = ET.SubElement(defs, "filter", {
-        "id": filter_id, "x": "-20%", "y": "-20%", "width": "140%", "height": "140%"
-    })
-    ET.SubElement(f, "feGaussianBlur", {
-        "in": "SourceGraphic", "stdDeviation": "3", "result": "blur"
-    })
-    fe_merge = ET.SubElement(f, "feMerge")
-    ET.SubElement(fe_merge, "feMergeNode", {"in": "blur"})
-    ET.SubElement(fe_merge, "feMergeNode", {"in": "SourceGraphic"})
-
-
-def add_gradient(defs, grad_id, colors, angle="0%"):
-    """Add a linear gradient with multiple stops."""
+def add_gradient(defs, grad_id, colors):
+    """Add a linear gradient — these work fine on GitHub."""
     grad = ET.SubElement(defs, "linearGradient", {
         "id": grad_id, "x1": "0%", "y1": "0%", "x2": "100%", "y2": "0%"
     })
@@ -132,12 +104,33 @@ def add_gradient(defs, grad_id, colors, angle="0%"):
         })
 
 
-# ── Banner SVG — Animated gradient wave ─────────────────────
-def gen_banner(config: dict, out: str):
-    """Wide animated gradient banner with flowing waves."""
+def glow_circle(p, cx, cy, r, color, opacity="0.15"):
+    """Faux glow using a larger transparent circle behind the main one."""
+    ET.SubElement(p, "circle", {
+        "cx": str(cx), "cy": str(cy), "r": str(r * 3),
+        "fill": color, "opacity": opacity
+    })
+    ET.SubElement(p, "circle", {
+        "cx": str(cx), "cy": str(cy), "r": str(r), "fill": color
+    })
+
+
+def glow_rect(p, x, y, w, h, color, rx=6, opacity="0.12"):
+    """Faux glow using a larger transparent rect behind."""
+    pad = 4
+    ET.SubElement(p, "rect", {
+        "x": str(x - pad), "y": str(y - pad),
+        "width": str(w + pad * 2), "height": str(h + pad * 2),
+        "rx": str(rx + 2), "fill": color, "opacity": opacity
+    })
+
+
+# ── Banner SVG ──────────────────────────────────────────────
+def gen_banner(config, out):
     name = config.get("name", "")
     headline = config.get("headline", "")
-    bw, bh = 900, 200
+    tagline = config.get("tagline", "")
+    bw, bh = 900, 180
 
     svg = ET.Element("svg", {
         "xmlns": "http://www.w3.org/2000/svg",
@@ -147,107 +140,81 @@ def gen_banner(config: dict, out: str):
     })
 
     defs = ET.SubElement(svg, "defs")
-
-    # Main background gradient
-    add_gradient(defs, "bannerBg", [C["bg"], C["surface"], C["bg"]])
-
-    # Accent gradient for waves
-    add_gradient(defs, "waveGrad1", [C["accent"], C["accent2"], C["purple"]])
-    add_gradient(defs, "waveGrad2", [C["purple"], C["accent2"], C["accent"]])
-
-    # Glow filter
-    add_neon_filter(defs, "bannerGlow", C["accent"])
+    add_gradient(defs, "bg", ["#0a0a0f", "#12121a", "#0a0a0f"])
+    add_gradient(defs, "wg1", [C["accent"], C["accent2"], C["purple"]])
+    add_gradient(defs, "wg2", [C["purple"], C["accent2"], C["accent"]])
+    add_gradient(defs, "accentLine", [C["accent"], C["accent2"]])
 
     # Background
-    R(svg, 0, 0, bw, bh, "url(#bannerBg)", rx=0)
+    R(svg, 0, 0, bw, bh, "url(#bg)", rx=0)
 
-    # Grid pattern for cyberpunk feel
-    grid_opacity = "0.04"
-    for gx in range(0, bw, 40):
+    # Subtle grid
+    for gx in range(0, bw + 1, 50):
         ET.SubElement(svg, "line", {
             "x1": str(gx), "y1": "0", "x2": str(gx), "y2": str(bh),
-            "stroke": C["accent"], "stroke-width": "0.5", "opacity": grid_opacity
+            "stroke": C["accent"], "stroke-width": "0.3", "opacity": "0.06"
         })
-    for gy in range(0, bh, 40):
+    for gy in range(0, bh + 1, 50):
         ET.SubElement(svg, "line", {
             "x1": "0", "y1": str(gy), "x2": str(bw), "y2": str(gy),
-            "stroke": C["accent"], "stroke-width": "0.5", "opacity": grid_opacity
+            "stroke": C["accent"], "stroke-width": "0.3", "opacity": "0.06"
         })
 
-    # Animated wave 1 (back)
-    wave1_points = []
-    for x_i in range(0, bw + 1, 4):
-        y_val = (bh * 0.55 + math.sin(x_i * 0.008 + 1) * 25
-                 + math.sin(x_i * 0.015) * 12)
-        wave1_points.append(f"{x_i},{y_val:.1f}")
-    path1_d = "M0," + str(bh) + " L" + " L".join(wave1_points) + f" L{bw},{bh} Z"
+    # Wave 1 (back, subtle)
+    pts = []
+    for x_i in range(0, bw + 1, 5):
+        y_val = bh * 0.55 + math.sin(x_i * 0.008 + 1) * 22 + math.sin(x_i * 0.015) * 10
+        pts.append(f"{x_i},{y_val:.1f}")
+    d = "M0," + str(bh) + " L" + " L".join(pts) + f" L{bw},{bh} Z"
+    ET.SubElement(svg, "path", {"d": d, "fill": "url(#wg1)", "opacity": "0.10"})
 
-    g1 = ET.SubElement(svg, "g", {"opacity": "0.12"})
-    ET.SubElement(g1, "path", {
-        "d": path1_d, "fill": "url(#waveGrad1)",
-    })
-    anim1 = ET.SubElement(g1, "animateTransform", {
-        "attributeName": "transform", "type": "translate",
-        "values": "0,0; 30,0; 0,0", "dur": "8s", "repeatCount": "indefinite"
-    })
+    # Wave 2 (front)
+    pts2 = []
+    for x_i in range(0, bw + 1, 5):
+        y_val = bh * 0.65 + math.sin(x_i * 0.01 + 3) * 18 + math.sin(x_i * 0.02 + 1) * 8
+        pts2.append(f"{x_i},{y_val:.1f}")
+    d2 = "M0," + str(bh) + " L" + " L".join(pts2) + f" L{bw},{bh} Z"
+    ET.SubElement(svg, "path", {"d": d2, "fill": "url(#wg2)", "opacity": "0.07"})
 
-    # Animated wave 2 (front)
-    wave2_points = []
-    for x_i in range(0, bw + 1, 4):
-        y_val = (bh * 0.65 + math.sin(x_i * 0.01 + 3) * 20
-                 + math.sin(x_i * 0.02 + 1) * 10)
-        wave2_points.append(f"{x_i},{y_val:.1f}")
-    path2_d = "M0," + str(bh) + " L" + " L".join(wave2_points) + f" L{bw},{bh} Z"
-
-    g2 = ET.SubElement(svg, "g", {"opacity": "0.08"})
-    ET.SubElement(g2, "path", {
-        "d": path2_d, "fill": "url(#waveGrad2)",
-    })
-    ET.SubElement(g2, "animateTransform", {
-        "attributeName": "transform", "type": "translate",
-        "values": "0,0; -25,0; 0,0", "dur": "6s", "repeatCount": "indefinite"
-    })
-
-    # Floating particles
-    for i in range(12):
-        px = (i * 73 + 20) % bw
-        py = 30 + (i * 37) % (bh - 80)
+    # Floating particles with pulse animation
+    for i in range(10):
+        px = (i * 89 + 30) % bw
+        py = 25 + (i * 41) % (bh - 70)
         r = 1.5 + (i % 3)
+        c = C["accent"] if i % 2 == 0 else C["accent2"]
         circle = ET.SubElement(svg, "circle", {
             "cx": str(px), "cy": str(py), "r": str(r),
-            "fill": C["accent"] if i % 2 == 0 else C["accent2"],
-            "opacity": "0.3"
+            "fill": c, "opacity": "0.25"
         })
         ET.SubElement(circle, "animate", {
             "attributeName": "opacity", "values": "0.1;0.5;0.1",
-            "dur": f"{2 + i * 0.3}s", "repeatCount": "indefinite"
-        })
-        ET.SubElement(circle, "animate", {
-            "attributeName": "cy", "values": f"{py};{py - 10};{py}",
-            "dur": f"{3 + i * 0.5}s", "repeatCount": "indefinite"
+            "dur": f"{2 + i * 0.4}s", "repeatCount": "indefinite"
         })
 
-    # Name text
-    T(svg, bw // 2, 75, name, C["text"], sz=36, w="800", anc="middle")
+    # Faux glow behind name
+    ET.SubElement(svg, "ellipse", {
+        "cx": str(bw // 2), "cy": "65", "rx": "180", "ry": "30",
+        "fill": C["accent"], "opacity": "0.04"
+    })
 
-    # Headline with glow
-    headline_g = ET.SubElement(svg, "g", {"filter": "url(#bannerGlow)"})
-    T(headline_g, bw // 2, 110, headline, C["accent"], sz=18, w="500", anc="middle")
+    # Name
+    T(svg, bw // 2, 68, name, C["text"], sz=34, w="800", anc="middle")
+
+    # Headline in accent color
+    T(svg, bw // 2, 100, headline, C["accent"], sz=17, w="500", anc="middle")
 
     # Tagline
-    tagline = config.get("tagline", "")
     if tagline:
-        T(svg, bw // 2, 140, tagline, C["text2"], sz=12, w="400", anc="middle")
+        T(svg, bw // 2, 125, tagline, C["text2"], sz=12, w="400", anc="middle")
 
-    # Bottom accent line with shimmer
-    line_g = ET.SubElement(svg, "g")
-    line_r = ET.SubElement(line_g, "rect", {
-        "x": str(bw * 0.15), "y": str(bh - 4),
-        "width": str(bw * 0.7), "height": "2",
-        "rx": "1", "fill": "url(#waveGrad1)", "opacity": "0.6"
+    # Bottom accent line
+    line = ET.SubElement(svg, "rect", {
+        "x": str(int(bw * 0.2)), "y": str(bh - 4),
+        "width": str(int(bw * 0.6)), "height": "2",
+        "rx": "1", "fill": "url(#accentLine)", "opacity": "0.5"
     })
-    ET.SubElement(line_g, "animate", {
-        "attributeName": "opacity", "values": "0.3;0.8;0.3",
+    ET.SubElement(line, "animate", {
+        "attributeName": "opacity", "values": "0.3;0.7;0.3",
         "dur": "3s", "repeatCount": "indefinite"
     })
 
@@ -257,8 +224,7 @@ def gen_banner(config: dict, out: str):
 
 
 # ── Typing Card ─────────────────────────────────────────────
-def gen_typing(config: dict, out: str):
-    """Animated typing tagline with neon cursor."""
+def gen_typing(config, out):
     roles = config.get("typing_roles", ["Full-Stack Developer", "Open Source Contributor"])
     headline = config.get("headline", "")
     tw, th = 480, 44
@@ -270,17 +236,14 @@ def gen_typing(config: dict, out: str):
 
     defs = ET.SubElement(svg, "defs")
     add_gradient(defs, "typeGrad", [C["accent"], C["accent2"]])
-    add_neon_filter(defs, "cursorGlow", C["accent"])
 
-    # Background
+    # Background pill
     R(svg, 0, 0, tw, th, C["surface"], rx=22, stroke=C["border"], sw=1)
 
-    # Left accent dot
-    ET.SubElement(svg, "circle", {
-        "cx": "18", "cy": str(th // 2), "r": "4", "fill": C["accent"]
-    })
+    # Accent dot with faux glow
+    glow_circle(svg, 18, th // 2, 4, C["accent"], "0.2")
 
-    # Animated text
+    # Animated text cycling
     mid_x = 34
     if roles:
         for idx, role in enumerate(roles):
@@ -294,15 +257,16 @@ def gen_typing(config: dict, out: str):
     else:
         T(svg, mid_x, 28, headline, C["text"], sz=13, w="500", ff=FF_MONO)
 
-    # Neon cursor
+    # Cursor with faux glow
     cursor_x = min(mid_x + 22 * 8.2 + 6, tw - 30)
-    cursor_g = ET.SubElement(svg, "g", {"filter": "url(#cursorGlow)"})
-    r = ET.SubElement(cursor_g, "rect", {
+    glow_rect(svg, cursor_x - 2, 12, 6, 20, C["accent"], rx=2, opacity="0.3")
+    r = ET.SubElement(svg, "rect", {
         "x": str(cursor_x), "y": "13", "width": "2", "height": "18",
         "rx": "1", "fill": C["accent"]
     })
     ET.SubElement(r, "animate", {
-        "attributeName": "opacity", "values": "1;0;1", "dur": "1.1s", "repeatCount": "indefinite"
+        "attributeName": "opacity", "values": "1;0;1",
+        "dur": "1.1s", "repeatCount": "indefinite"
     })
 
     with open(out, "w") as f:
@@ -311,8 +275,7 @@ def gen_typing(config: dict, out: str):
 
 
 # ── Terminal Card ────────────────────────────────────────────
-def gen_terminal(config: dict, out: str):
-    """Sleek terminal card with neon accents."""
+def gen_terminal(config, out):
     name = config.get("name", "")
     headline = config.get("headline", "")
     skills = config.get("skills", {})
@@ -332,10 +295,10 @@ def gen_terminal(config: dict, out: str):
         lines.append(("langs", ", ".join(langs), C["accent2"]))
 
     focus = config.get("current_focus", {})
-    for cat, key in [("building", "building"), ("learning", "learning"), ("exploring", "exploring")]:
+    for key in ["building", "learning", "exploring"]:
         items = focus.get(key, [])
         if items:
-            lines.append((cat, ", ".join(items[:2]), C["text2"]))
+            lines.append((key, ", ".join(items[:2]), C["text2"]))
 
     ch = title_bar_h + pad + (lh + 4) + len(lines) * lh + lh + pad + 12
 
@@ -345,20 +308,19 @@ def gen_terminal(config: dict, out: str):
     })
 
     defs = ET.SubElement(svg, "defs")
-    add_gradient(defs, "termGrad", [C["accent"], C["accent2"]])
-    add_neon_filter(defs, "termGlow", C["accent"])
+    add_gradient(defs, "termLine", [C["accent"], C["accent2"]])
 
-    # Outer card with subtle gradient border effect
+    # Card background
     R(svg, 0, 0, cw, ch, C["surface"], rx=14, stroke=C["border"], sw=1)
 
-    # Title bar with gradient bottom edge
+    # Title bar
     R(svg, 0, 0, cw, title_bar_h, C["surface2"], rx=14)
     R(svg, 0, title_bar_h - 4, cw, 4, C["surface2"], rx=0)
 
-    # Gradient line under title bar
+    # Gradient accent line under title bar
     ET.SubElement(svg, "rect", {
         "x": "0", "y": str(title_bar_h - 1), "width": str(cw), "height": "1",
-        "fill": "url(#termGrad)", "opacity": "0.5"
+        "fill": "url(#termLine)", "opacity": "0.5"
     })
 
     # Traffic lights
@@ -370,29 +332,28 @@ def gen_terminal(config: dict, out: str):
 
     y0 = title_bar_h + pad
 
-    # $ whoami prompt with glow
-    prompt_g = ET.SubElement(svg, "g", {"filter": "url(#termGlow)"})
-    T(prompt_g, pad, y0, "$ whoami", C["green_prompt"], sz=13, w="600", ff=FF_MONO)
+    # Prompt with faux glow
+    glow_rect(svg, pad - 1, y0 - 12, 90, 18, C["green_prompt"], rx=2, opacity="0.1")
+    T(svg, pad, y0, "$ whoami", C["green_prompt"], sz=13, w="600", ff=FF_MONO)
     y0 += lh + 6
 
-    # Output lines
     for key, val, val_color in lines:
-        g = ET.SubElement(svg, "g")
-        T(g, pad + 10, y0, key + ":", C["text3"], sz=12, w="400", ff=FF_MONO)
+        T(svg, pad + 10, y0, key + ":", C["text3"], sz=12, w="400", ff=FF_MONO)
         val_x = pad + 10 + max(len(key), 4) * 8.4 + 18
-        T(g, val_x, y0, val, val_color, sz=12, w="500", ff=FF_MONO)
+        T(svg, val_x, y0, val, val_color, sz=12, w="500", ff=FF_MONO)
         y0 += lh
 
-    # Blinking cursor
+    # Blinking prompt
     y0 += 4
     T(svg, pad, y0, "$ ", C["green_prompt"], sz=13, w="600", ff=FF_MONO)
-    blink_g = ET.SubElement(svg, "g", {"filter": "url(#termGlow)"})
-    blink = ET.SubElement(blink_g, "rect", {
+    glow_rect(svg, pad + 18, y0 - 13, 10, 18, C["green_prompt"], rx=2, opacity="0.2")
+    blink = ET.SubElement(svg, "rect", {
         "x": str(pad + 20), "y": str(y0 - 13), "width": "8", "height": "16",
         "rx": "1", "fill": C["green_prompt"]
     })
     ET.SubElement(blink, "animate", {
-        "attributeName": "opacity", "values": "1;0;1", "dur": "1s", "repeatCount": "indefinite"
+        "attributeName": "opacity", "values": "1;0;1",
+        "dur": "1s", "repeatCount": "indefinite"
     })
 
     with open(out, "w") as f:
@@ -401,8 +362,7 @@ def gen_terminal(config: dict, out: str):
 
 
 # ── Skill Spectrum ───────────────────────────────────────────
-def gen_skills(config: dict, out: str):
-    """Custom skill pills SVG - replaces broken shields.io badges."""
+def gen_skills(config, out):
     skills = config.get("skills", {})
     all_skills = []
     for category, items in skills.items():
@@ -412,7 +372,6 @@ def gen_skills(config: dict, out: str):
     if not all_skills:
         return
 
-    # Layout: pills in rows, max ~6 per row
     pill_w = 95
     pill_h = 28
     pill_gap = 8
@@ -429,13 +388,9 @@ def gen_skills(config: dict, out: str):
 
     defs = ET.SubElement(svg, "defs")
     add_gradient(defs, "skillGrad", [C["accent"], C["accent2"]])
-    add_neon_filter(defs, "skillGlow", C["accent"])
 
     # Title
-    T(svg, cw // 2, 28, "TECH STACK", C["text2"], sz=11, w="700", anc="middle",
-      ff=FF_MONO)
-
-    # Gradient underline for title
+    T(svg, cw // 2, 28, "TECH STACK", C["text2"], sz=11, w="700", anc="middle", ff=FF_MONO)
     ET.SubElement(svg, "rect", {
         "x": str(cw // 2 - 45), "y": "34", "width": "90", "height": "2",
         "rx": "1", "fill": "url(#skillGrad)", "opacity": "0.6"
@@ -448,7 +403,7 @@ def gen_skills(config: dict, out: str):
         x = 20 + col * (pill_w + pill_gap)
         y = start_y + row * (pill_h + pill_gap)
 
-        # Pill background
+        # Pill with colored border
         R(svg, x, y, pill_w, pill_h, C["surface2"], rx=14, stroke=color, sw=1)
 
         # Color dot
@@ -457,8 +412,7 @@ def gen_skills(config: dict, out: str):
         })
 
         # Skill name
-        T(svg, x + 24, y + pill_h // 2 + 4, name, C["text"], sz=10, w="500",
-          ff=FF_MONO)
+        T(svg, x + 24, y + pill_h // 2 + 4, name, C["text"], sz=10, w="500", ff=FF_MONO)
 
     with open(out, "w") as f:
         f.write(svg_str(svg))
@@ -466,8 +420,7 @@ def gen_skills(config: dict, out: str):
 
 
 # ── GitHub Stats Card ───────────────────────────────────────
-def gen_stats(data: dict, config: dict, out: str):
-    """Glowing stat cards with gradient accents."""
+def gen_stats(data, config, out):
     user = data.get("user", {})
     stats = data.get("repo_stats", {})
 
@@ -488,8 +441,6 @@ def gen_stats(data: dict, config: dict, out: str):
 
     defs = ET.SubElement(svg, "defs")
     add_gradient(defs, "statGrad", [C["accent"], C["accent2"], C["purple"]])
-    add_neon_filter(defs, "statGlow", C["accent"])
-    add_neon_filter(defs, "valGlow", C["accent"])
 
     # Card background
     R(svg, 0, 0, cw, ch, C["surface"], rx=14, stroke=C["border"], sw=1)
@@ -501,13 +452,16 @@ def gen_stats(data: dict, config: dict, out: str):
     })
 
     if is_empty:
-        # Glowing empty state
-        glow_g = ET.SubElement(svg, "g", {"filter": "url(#statGlow)"})
-        T(glow_g, pad + 4, 58, "\u26A1", C["accent"], sz=30, w="400")
-        T(svg, pad + 48, 56, "Just getting started", C["text"], sz=17, w="700")
-        T(svg, pad, 82, "Stars, repos, and contributions will appear here as I build.",
+        # Faux glow behind icon
+        ET.SubElement(svg, "ellipse", {
+            "cx": str(pad + 15), "cy": "55", "rx": "30", "ry": "25",
+            "fill": C["accent"], "opacity": "0.06"
+        })
+        T(svg, pad + 4, 60, "\u26A1", C["accent"], sz=30, w="400")
+        T(svg, pad + 48, 58, "Just getting started", C["text"], sz=17, w="700")
+        T(svg, pad, 84, "Stars, repos, and contributions will appear here as I build.",
           C["text2"], sz=12)
-        T(svg, pad, 104, "Watch this space grow.", C["text3"], sz=11)
+        T(svg, pad, 106, "Watch this space grow.", C["text3"], sz=11)
     else:
         T(svg, pad, 38, "GITHUB STATS", C["text2"], sz=11, w="700", ff=FF_MONO)
 
@@ -523,20 +477,27 @@ def gen_stats(data: dict, config: dict, out: str):
             x = pad + i * (box_w + 14)
             y = 55
 
-            # Mini card with colored top border
+            # Mini card
             R(svg, x, y, box_w, 85, C["bg"], rx=10, stroke=C["border"], sw=0.5)
+
+            # Colored top accent
             ET.SubElement(svg, "rect", {
                 "x": str(x + 1), "y": str(y + 1), "width": str(box_w - 2), "height": "3",
                 "rx": "10", "fill": color, "opacity": "0.7"
             })
 
-            # Value with glow
-            val_g = ET.SubElement(svg, "g", {"filter": "url(#valGlow)"})
-            T(val_g, x + box_w // 2, y + 45, val, color, sz=28, w="700", anc="middle")
+            # Faux glow behind value
+            ET.SubElement(svg, "ellipse", {
+                "cx": str(x + box_w // 2), "cy": str(y + 42),
+                "rx": "25", "ry": "15", "fill": color, "opacity": "0.06"
+            })
+
+            # Value
+            T(svg, x + box_w // 2, y + 48, val, color, sz=28, w="700", anc="middle")
 
             # Label
-            T(svg, x + box_w // 2, y + 67, label, C["text2"], sz=10, w="500",
-              anc="middle", ff=FF_MONO)
+            T(svg, x + box_w // 2, y + 70, label, C["text2"], sz=10,
+              w="500", anc="middle", ff=FF_MONO)
 
     with open(out, "w") as f:
         f.write(svg_str(svg))
@@ -544,8 +505,7 @@ def gen_stats(data: dict, config: dict, out: str):
 
 
 # ── Languages Card ──────────────────────────────────────────
-def gen_languages(data: dict, out: str):
-    """Language bars with shimmer animation."""
+def gen_languages(data, out):
     languages = data.get("repo_stats", {}).get("languages", [])
 
     cw = 580
@@ -582,9 +542,6 @@ def gen_languages(data: dict, out: str):
         "viewBox": f"0 0 {cw} {ch}", "role": "img", "aria-label": "Top languages",
     })
 
-    defs = ET.SubElement(svg, "defs")
-    add_neon_filter(defs, "langGlow", C["accent"])
-
     R(svg, 0, 0, cw, ch, C["surface"], rx=14, stroke=C["border"], sw=1)
 
     # Title
@@ -603,29 +560,30 @@ def gen_languages(data: dict, out: str):
         y = title_area + i * row_h
         color = LANG_COLORS.get(lang["name"], C["accent"])
 
-        # Language name
         T(svg, pad, y + 22, lang["name"], C["text"], sz=12, w="500")
 
         bar_x = pad + label_w
-        # Bar bg
         R(svg, bar_x, y + 12, bar_area, 12, C["bg"], rx=6, stroke=C["border"], sw=0.5)
 
-        # Bar fill with gradient
         fill_w = max((lang["percentage"] / max_pct) * bar_area, 8) if max_pct > 0 else 8
-        bar_g = ET.SubElement(svg, "g", {"filter": "url(#langGlow)"})
-        R(bar_g, bar_x, y + 12, fill_w, 12, color, rx=6)
+        # Faux glow behind bar
+        ET.SubElement(svg, "rect", {
+            "x": str(bar_x - 2), "y": str(y + 10),
+            "width": str(fill_w + 4), "height": "16",
+            "rx": "8", "fill": color, "opacity": "0.12"
+        })
+        R(svg, bar_x, y + 12, fill_w, 12, color, rx=6)
 
-        # Shimmer effect on bar
-        shimmer = ET.SubElement(bar_g, "rect", {
+        # Shimmer
+        shimmer = ET.SubElement(svg, "rect", {
             "x": str(bar_x), "y": str(y + 12), "width": str(fill_w), "height": "12",
             "rx": "6", "fill": "white", "opacity": "0"
         })
         ET.SubElement(shimmer, "animate", {
-            "attributeName": "opacity", "values": "0;0.15;0",
+            "attributeName": "opacity", "values": "0;0.12;0",
             "dur": f"{2 + i * 0.3}s", "repeatCount": "indefinite"
         })
 
-        # Percentage
         T(svg, cw - pad, y + 22, f'{lang["percentage"]}%',
           C["text2"], sz=11, w="600", anc="middle", ff=FF_MONO)
 
@@ -635,8 +593,7 @@ def gen_languages(data: dict, out: str):
 
 
 # ── Activity Card ───────────────────────────────────────────
-def gen_activity(data: dict, out: str):
-    """Animated activity bar chart with neon glow."""
+def gen_activity(data, out):
     weeks = data.get("activity", [])
     while len(weeks) < 12:
         weeks.append({"label": "", "count": 0})
@@ -662,11 +619,9 @@ def gen_activity(data: dict, out: str):
 
     defs = ET.SubElement(svg, "defs")
     add_gradient(defs, "barGrad", [C["accent"], C["accent2"]])
-    add_neon_filter(defs, "barGlow", C["accent"])
 
     R(svg, 0, 0, cw, ch, C["surface"], rx=14, stroke=C["border"], sw=1)
 
-    # Title
     T(svg, pad, 32, "RECENT ACTIVITY", C["text2"], sz=11, w="700", ff=FF_MONO)
     ET.SubElement(svg, "rect", {
         "x": str(pad), "y": "38", "width": "120", "height": "2",
@@ -679,14 +634,24 @@ def gen_activity(data: dict, out: str):
         bh = max((count / max_count) * bar_max_h, 4) if max_count > 0 else 4
         y = title_area + bar_max_h - bh
 
-        # Bar with glow
-        bar_g = ET.SubElement(svg, "g", {"filter": "url(#barGlow)"})
-        R(bar_g, x, y, bar_w, bh, "url(#barGrad)", rx=6)
+        # Faux glow behind bar
+        ET.SubElement(svg, "rect", {
+            "x": str(x - 3), "y": str(y - 3),
+            "width": str(bar_w + 6), "height": str(bh + 6),
+            "rx": "9", "fill": C["accent"], "opacity": "0.08"
+        })
 
-        # Pulse animation for active bars
+        # Bar with gradient
+        R(svg, x, y, bar_w, bh, "url(#barGrad)", rx=6)
+
         if count > 0:
+            # Pulse
+            bar_g = ET.SubElement(svg, "rect", {
+                "x": str(x), "y": str(y), "width": str(bar_w), "height": str(bh),
+                "rx": "6", "fill": "white", "opacity": "0"
+            })
             ET.SubElement(bar_g, "animate", {
-                "attributeName": "opacity", "values": "0.85;1;0.85",
+                "attributeName": "opacity", "values": "0;0.1;0",
                 "dur": f"{2 + i * 0.2}s", "repeatCount": "indefinite"
             })
             T(svg, x + bar_w // 2, y - 6, str(count),
@@ -703,8 +668,7 @@ def gen_activity(data: dict, out: str):
 
 
 # ── Wave Divider ─────────────────────────────────────────────
-def gen_wave(out: str):
-    """Animated gradient wave divider with glow."""
+def gen_wave(out):
     w, h = 900, 30
 
     svg = ET.Element("svg", {
@@ -714,7 +678,6 @@ def gen_wave(out: str):
 
     defs = ET.SubElement(svg, "defs")
     add_gradient(defs, "waveLine", ["#00f5a000", C["accent"], C["accent2"], "#00f5a000"])
-    add_neon_filter(defs, "waveGlow", C["accent"])
 
     # Main wave
     points = []
@@ -722,9 +685,7 @@ def gen_wave(out: str):
         y_val = h // 2 + math.sin(x_i * 0.015) * 5 + math.sin(x_i * 0.04) * 3
         points.append(f"{x_i},{y_val:.1f}")
     path_d = "M " + " L ".join(points)
-
-    wave_g = ET.SubElement(svg, "g", {"filter": "url(#waveGlow)"})
-    ET.SubElement(wave_g, "path", {
+    ET.SubElement(svg, "path", {
         "d": path_d, "fill": "none", "stroke": "url(#waveLine)",
         "stroke-width": "1.5", "stroke-linecap": "round"
     })
@@ -735,7 +696,6 @@ def gen_wave(out: str):
         y_val = h // 2 + math.sin(x_i * 0.012 + 2) * 3 + math.sin(x_i * 0.035 + 1) * 2
         points2.append(f"{x_i},{y_val:.1f}")
     path2_d = "M " + " L ".join(points2)
-
     ET.SubElement(svg, "path", {
         "d": path2_d, "fill": "none", "stroke": "url(#waveLine)",
         "stroke-width": "0.8", "stroke-linecap": "round", "opacity": "0.3"
@@ -762,7 +722,7 @@ def main():
         with open(data_path, "r") as f:
             data = json.load(f)
 
-    print("[*] Generating SVG assets (Neon Dark Edition)...")
+    print("[*] Generating SVG assets (GitHub-safe Neon Dark v2)...")
     gen_banner(config, os.path.join(assets_dir, "banner.svg"))
     gen_typing(config, os.path.join(assets_dir, "typing-card.svg"))
     gen_terminal(config, os.path.join(assets_dir, "terminal-card.svg"))
