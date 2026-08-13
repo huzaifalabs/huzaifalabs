@@ -1,0 +1,81 @@
+{
+  "name": "Huzaifa",
+  "username": "huzaifalabs",
+  "headline": "Full-Stack Developer",
+  "tagline": "Building clean, scalable web applications with modern technologies",
+  "accent_color": "#10b981",
+  "accent_color_light": "#34d399",
+  "avatar_url": "https://github.com/huzaifalabs.png",
+
+  "social": {
+    "github": "https://github.com/huzaifalabs",
+    "linkedin": null,
+    "twitter": null,
+    "portfolio": null,
+    "email": null
+  },
+
+  "about": "I'm a full-stack developer passionate about building clean, scalable web applications. I work primarily with Python and JavaScript/TypeScript, exploring both frontend and backend technologies. Currently focused on deepening my skills in modern web frameworks and cloud-native development. I believe in writing maintainable code and learning by building real projects.",
+
+  "skills": {
+    "languages": [
+      { "name": "Python", "icon": "python" },
+      { "name": "JavaScript", "icon": "javascript" },
+      { "name": "TypeScript", "icon": "typescript" }
+    ],
+    "frontend": [
+      { "name": "HTML5", "icon": "html5" },
+      { "name": "CSS3", "icon": "css3" },
+      { "name": "React", "icon": "react" },
+      { "name": "Next.js", "icon": "nextdotjs" }
+    ],
+    "backend": [
+      { "name": "Node.js", "icon": "nodejs" },
+      { "name": "Express", "icon": "express" },
+      { "name": "FastAPI", "icon": "fastapi" }
+    ],
+    "databases": [
+      { "name": "PostgreSQL", "icon": "postgresql" },
+      { "name": "MongoDB", "icon": "mongodb" },
+      { "name": "SQLite", "icon": "sqlite" }
+    ],
+    "tools": [
+      { "name": "Git", "icon": "git" },
+      { "name": "GitHub", "icon": "github" },
+      { "name": "VS Code", "icon": "visualstudiocode" },
+      { "name": "Linux", "icon": "linux" },
+      { "name": "Docker", "icon": "docker" }
+    ]
+  },
+
+  "current_focus": {
+    "building": [
+      "Full-stack web applications",
+      "Open-source tools"
+    ],
+    "learning": [
+      "System design",
+      "Cloud architecture"
+    ],
+    "exploring": [
+      "AI/ML integration",
+      "DevOps practices"
+    ]
+  },
+
+  "featured_projects": [],
+
+  "design": {
+    "theme": "dark",
+    "style": "modern_structured",
+    "colors": {
+      "bg": "#0d1117",
+      "surface": "#161b22",
+      "border": "#30363d",
+      "text_primary": "#e6edf3",
+      "text_secondary": "#8b949e",
+      "accent": "#10b981",
+      "accent_light": "#34d399"
+    }
+  }
+}
