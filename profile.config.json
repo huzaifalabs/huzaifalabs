@@ -71,16 +71,17 @@
   "featured_projects": [],
 
   "design": {
-    "theme": "dark",
-    "style": "modern_structured",
+    "theme": "neon_dark",
+    "style": "cyberpunk_glass",
     "colors": {
-      "bg": "#0d1117",
-      "surface": "#161b22",
-      "border": "#30363d",
-      "text_primary": "#e6edf3",
-      "text_secondary": "#8b949e",
-      "accent": "#10b981",
-      "accent_light": "#34d399"
+      "bg": "#0a0a0f",
+      "surface": "#12121a",
+      "surface2": "#1a1a2e",
+      "border": "#2a2a3e",
+      "text_primary": "#eaeaff",
+      "text_secondary": "#8888aa",
+      "accent": "#00f5a0",
+      "accent_light": "#00d9f5"
     }
   }
 }

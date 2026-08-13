@@ -2,8 +2,9 @@
 """
 Generate README.md from profile.config.json and data/github_data.json.
 
-Produces a polished, dark-theme GitHub Profile Dashboard
-with terminal card, animated typing, and visual rhythm.
+Neon Dark Edition - Cool, visually striking GitHub profile dashboard.
+Fixes: shields.io badges use <img> HTML tags (not markdown) to render
+properly inside HTML block elements on GitHub.
 """
 
 import json
@@ -11,7 +12,7 @@ import os
 import sys
 
 
-# ── Badge helpers ──────────────────────────────────────────────
+# ── Badge helpers (using <img> HTML tags for GitHub compatibility) ──
 
 LOGO_MAP = {
     "python": "python", "javascript": "javascript", "typescript": "typescript",
@@ -35,21 +36,26 @@ COLOR_MAP = {
 DARK_TEXT = {"JavaScript", "Next.js", "Linux"}
 
 
-def badge(name: str, icon: str) -> str:
+def badge_img(name: str, icon: str) -> str:
+    """Return an <img> HTML tag (NOT markdown) for shields.io badges.
+    This is critical: markdown ![]() does NOT render inside HTML block
+    elements like <p> or <div> on GitHub.
+    """
     logo = LOGO_MAP.get(icon.lower(), icon.lower())
     color = COLOR_MAP.get(name, "10b981")
     lc = "black" if name in DARK_TEXT else "white"
-    return (f'![{name}](https://img.shields.io/badge/{name}-{color}'
-            f'?style=flat-square&logo={logo}&logoColor={lc})')
+    url = f'https://img.shields.io/badge/{name}-{color}?style=flat-square&logo={logo}&logoColor={lc}'
+    return f'<img src="{url}" alt="{name}" height="22"/>'
 
 
 def social_badge(label: str, url: str, color: str, icon: str) -> str:
-    return (f'[![{label}](https://img.shields.io/badge/{label}-{color}'
-            f'?style=flat-square&logo={icon}&logoColor=white)]({url})')
+    """Return a clickable <a> wrapping an <img> badge."""
+    badge_url = f'https://img.shields.io/badge/{label}-{color}?style=flat-square&logo={icon}&logoColor=white'
+    return f'<a href="{url}"><img src="{badge_url}" alt="{label}" height="22"/></a>'
 
 
 def wave() -> str:
-    return '\n<img src="assets/stats/wave-divider.svg" width="100%" alt="" />\n'
+    return '<img src="assets/stats/wave-divider.svg" width="100%" alt=""/>\n'
 
 
 # ── Section builders ──────────────────────────────────────────
@@ -80,11 +86,13 @@ def build_hero(config: dict) -> str:
 
     return f"""<div align="center">
 
+<img src="assets/stats/banner.svg" width="100%" alt="{name} - {headline}" />
+
 <a href="https://github.com/{username}">
-  <img src="{avatar}" width="130" height="130" style="border-radius:50%;border:4px solid {accent};" alt="{name}'s avatar" />
+  <img src="{avatar}" width="120" height="120" style="border-radius:50%;border:3px solid {accent};margin-top:-60px;position:relative;z-index:1;background:{config['design']['colors']['bg']};" alt="{name}'s avatar" />
 </a>
 
-<h1 style="margin:4px 0;">{name}</h1>
+<br/>
 
 <img src="assets/stats/typing-card.svg" alt="{headline}" />
 
@@ -97,15 +105,40 @@ def build_hero(config: dict) -> str:
 
 
 def build_tech_stack(config: dict) -> str:
+    """Build tech stack using custom SVG + fallback shields.io badges as <img>."""
     skills = config.get("skills", {})
     lines = []
     lines.append("")
-    lines.append(f'<p align="center"><b>{"  ".join(badge(s["name"], s["icon"]) for s in skills.get("languages", []))}</b></p>')
-    lines.append(f'<p align="center">{"  ".join(badge(s["name"], s["icon"]) for s in skills.get("frontend", []))}</p>')
-    lines.append(f'<p align="center">{"  ".join(badge(s["name"], s["icon"]) for s in skills.get("backend", []))}</p>')
-    lines.append(f'<p align="center">{"  ".join(badge(s["name"], s["icon"]) for s in skills.get("databases", []))}</p>')
-    lines.append(f'<p align="center">{"  ".join(badge(s["name"], s["icon"]) for s in skills.get("tools", []))}</p>')
+    lines.append('<div align="center">')
+    lines.append('<img src="assets/stats/skills.svg" alt="Tech Stack" />')
+    lines.append('</div>')
     lines.append("")
+    return "\n".join(lines)
+
+
+def build_tech_stack_badges(config: dict) -> str:
+    """Inline badge fallback using <img> tags (not markdown ![]())."""
+    skills = config.get("skills", {})
+    lines = []
+    lines.append("")
+
+    categories = [
+        ("\U0001F4D8 Languages", skills.get("languages", [])),
+        ("\U0001F3A8 Frontend", skills.get("frontend", [])),
+        ("\u2699\ufe0f Backend", skills.get("backend", [])),
+        ("\U0001F5C4\ufe0f Databases", skills.get("databases", [])),
+        ("\U0001F6E0\ufe0f Tools", skills.get("tools", [])),
+    ]
+
+    for cat_label, items in categories:
+        if items:
+            badges = " \n".join(badge_img(s["name"], s["icon"]) for s in items)
+            lines.append(f'<div align="center">')
+            lines.append(f'<b>{cat_label}</b><br/>')
+            lines.append(badges)
+            lines.append(f'</div>')
+            lines.append("")
+
     return "\n".join(lines)
 
 
@@ -119,22 +152,30 @@ def build_current_focus(config: dict) -> str:
     exploring = focus.get("exploring", [])
 
     max_len = max(len(building), len(learning), len(exploring), 1)
-    while len(building) < max_len: building.append("")
-    while len(learning) < max_len: learning.append("")
-    while len(exploring) < max_len: exploring.append("")
+    while len(building) < max_len:
+        building.append("")
+    while len(learning) < max_len:
+        learning.append("")
+    while len(exploring) < max_len:
+        exploring.append("")
 
     rows = []
-    headers = ["\U0001F6E0\ufe0f Building", "\U0001F4DA Learning", "\U0001F52D Exploring"]
     for i in range(max_len):
-        rows.append(f'  <tr><td>{building[i] or " "}</td><td>{learning[i] or " "}</td><td>{exploring[i] or " "}</td></tr>')
+        rows.append(
+            f'  <tr>\n'
+            f'    <td align="center">{building[i] or "&nbsp;"}</td>\n'
+            f'    <td align="center">{learning[i] or "&nbsp;"}</td>\n'
+            f'    <td align="center">{exploring[i] or "&nbsp;"}</td>\n'
+            f'  </tr>'
+        )
 
     return f"""
 
-<table align="center">
+<table align="center" width="80%">
   <tr>
-    <th>{headers[0]}</th>
-    <th>{headers[1]}</th>
-    <th>{headers[2]}</th>
+    <th align="center">\U0001F6E0\ufe0f Building</th>
+    <th align="center">\U0001F4DA Learning</th>
+    <th align="center">\U0001F52D Exploring</th>
   </tr>
   {chr(10).join(rows)}
 </table>
@@ -145,11 +186,11 @@ def build_current_focus(config: dict) -> str:
 def build_stats_section() -> str:
     return f"""
 <div align="center">
-  <img src="assets/stats/github-stats.svg" width="520" alt="GitHub Statistics" />
+  <img src="assets/stats/github-stats.svg" width="580" alt="GitHub Statistics" />
   <br/><br/>
-  <img src="assets/stats/languages.svg" width="520" alt="Top Languages" />
+  <img src="assets/stats/languages.svg" width="580" alt="Top Languages" />
   <br/><br/>
-  <img src="assets/stats/activity.svg" width="520" alt="Contribution Activity" />
+  <img src="assets/stats/activity.svg" width="580" alt="Contribution Activity" />
 </div>
 
 """
@@ -175,7 +216,8 @@ def build_footer(config: dict) -> str:
 {links_str}
 
 <br/>
-<sub>Automated with GitHub Actions</sub>
+<img src="assets/stats/wave-divider.svg" width="100%" alt=""/>
+<sub>Built with Python + SVG + GitHub Actions</sub>
 
 </div>
 """
@@ -201,16 +243,15 @@ def main():
         build_hero(config),
         wave(),
         '<div align="center">',
-        '<img src="assets/stats/terminal-card.svg" width="520" alt="About Huzaifa" />',
+        '<img src="assets/stats/terminal-card.svg" width="580" alt="About Huzaifa" />',
         '</div>',
-        "\n---\n",
-        '<p align="center"><b>\u26A1 Tech Stack</b></p>',
+        wave(),
         build_tech_stack(config),
+        build_tech_stack_badges(config),
         wave(),
         build_current_focus(config),
         wave(),
         build_stats_section(),
-        wave(),
         build_footer(config),
     ]
 
