@@ -243,16 +243,25 @@ def gen_typing(config, out):
     # Accent dot with faux glow
     glow_circle(svg, 18, th // 2, 4, C["accent"], "0.2")
 
-    # Animated text cycling
+    # Animated text cycling using <animate> (GitHub strips <set>)
     mid_x = 34
     if roles:
+        n = len(roles)
+        cycle_dur = n * 3.5
         for idx, role in enumerate(roles):
-            begin_show = idx * 3.5
-            begin_hide = begin_show + 3.0
+            # Build values/keyTimes for: hidden -> visible -> hidden
+            show_start = idx * 3.5 / cycle_dur
+            show_end = (idx * 3.5 + 3.0) / cycle_dur
             g = ET.SubElement(svg, "g")
-            ET.SubElement(g, "set", {"attributeName": "opacity", "to": "0"})
-            ET.SubElement(g, "set", {"attributeName": "opacity", "to": "1", "begin": f"{begin_show}s"})
-            ET.SubElement(g, "set", {"attributeName": "opacity", "to": "0", "begin": f"{begin_hide}s"})
+            vals = f"0;0;1;1;0;0"
+            times = f"0;{show_start:.4f};{show_start:.4f};{show_end:.4f};{show_end:.4f};1"
+            ET.SubElement(g, "animate", {
+                "attributeName": "opacity",
+                "values": vals,
+                "keyTimes": times,
+                "dur": f"{cycle_dur}s",
+                "repeatCount": "indefinite"
+            })
             T(g, mid_x, 28, role, C["text"], sz=13, w="500", ff=FF_MONO)
     else:
         T(svg, mid_x, 28, headline, C["text"], sz=13, w="500", ff=FF_MONO)
@@ -708,61 +717,92 @@ def gen_wave(out):
 
 # ── Avatar Frame ────────────────────────────────────────────
 def gen_avatar_frame(config, out):
-    """Animated gradient ring frame for avatar."""
-    size = 140
+    """Avatar frame with embedded photo and animated gradient ring."""
+    avatar_url = config.get("avatar_url", "")
+    size = 150
     cx, cy = size // 2, size // 2
-    r_outer = 68
-    r_inner = 58
+    r_outer = 72
+    r_inner = 62
 
     svg = ET.Element("svg", {
         "xmlns": "http://www.w3.org/2000/svg",
+        "xmlns:xlink": "http://www.w3.org/1999/xlink",
         "width": str(size), "height": str(size),
         "viewBox": f"0 0 {size} {size}",
-        "role": "img", "aria-label": "Avatar frame",
+        "role": "img", "aria-label": "Avatar",
     })
 
     defs = ET.SubElement(svg, "defs")
     add_gradient(defs, "frameGrad", [C["accent"], C["accent2"], C["purple"], C["accent"]])
 
-    # Outer glow circle
+    # Clip path for circular avatar
+    clip = ET.SubElement(defs, "clipPath", {"id": "avatarClip"})
+    ET.SubElement(clip, "circle", {"cx": str(cx), "cy": str(cy), "r": str(r_inner - 2)})
+
+    # Outer glow
     ET.SubElement(svg, "circle", {
-        "cx": str(cx), "cy": str(cy), "r": str(r_outer + 6),
-        "fill": "none", "stroke": C["accent"], "stroke-width": "1",
-        "opacity": "0.15"
+        "cx": str(cx), "cy": str(cy), "r": str(r_outer + 5),
+        "fill": "none", "stroke": C["accent"], "stroke-width": "1", "opacity": "0.12"
     })
 
-    # Main gradient ring (rotating via stroke-dasharray animation)
+    # Animated rotating gradient ring
     ring = ET.SubElement(svg, "circle", {
         "cx": str(cx), "cy": str(cy), "r": str(r_outer),
         "fill": "none", "stroke": "url(#frameGrad)",
         "stroke-width": "3", "stroke-linecap": "round",
     })
-    # Dash animation for rotating effect
     circumference = 2 * math.pi * r_outer
+    ring.set("stroke-dasharray", f"{circumference * 0.25} {circumference * 0.75}")
     ET.SubElement(ring, "animate", {
         "attributeName": "stroke-dashoffset",
-        "values": f"0;{circumference / 2};{circumference}",
+        "values": f"0;-{circumference}",
+        "dur": "4s", "repeatCount": "indefinite"
+    })
+
+    # Second ring rotating opposite
+    ring2 = ET.SubElement(svg, "circle", {
+        "cx": str(cx), "cy": str(cy), "r": str(r_outer + 3),
+        "fill": "none", "stroke": C["accent2"],
+        "stroke-width": "1", "stroke-linecap": "round", "opacity": "0.3",
+    })
+    ring2.set("stroke-dasharray", f"{circumference * 0.15} {circumference * 0.85}")
+    ET.SubElement(ring2, "animate", {
+        "attributeName": "stroke-dashoffset",
+        "values": f"0;{circumference}",
         "dur": "6s", "repeatCount": "indefinite"
     })
-    ring.set("stroke-dasharray", f"{circumference * 0.3} {circumference * 0.7}")
 
-    # Inner solid ring
+    # Inner border ring
     ET.SubElement(svg, "circle", {
         "cx": str(cx), "cy": str(cy), "r": str(r_inner),
         "fill": "none", "stroke": C["border"], "stroke-width": "1.5"
     })
 
-    # Corner accents (4 small dots at cardinal points on the ring)
-    for angle_deg in [0, 90, 180, 270]:
+    # Avatar image (clipped to circle)
+    if avatar_url:
+        ET.SubElement(svg, "image", {
+            "xlink:href": avatar_url,
+            "x": str(cx - r_inner + 2), "y": str(cy - r_inner + 2),
+            "width": str((r_inner - 2) * 2), "height": str((r_inner - 2) * 2),
+            "clip-path": "url(#avatarClip)",
+            "preserveAspectRatio": "xMidYMid slice",
+        })
+
+    # 4 accent dots at cardinal points
+    for i, angle_deg in enumerate([0, 90, 180, 270]):
         rad = math.radians(angle_deg)
-        ax = cx + (r_outer - 1) * math.cos(rad)
-        ay = cy + (r_outer - 1) * math.sin(rad)
-        color = [C["accent"], C["accent2"], C["purple"], C["pink"]][angle_deg // 90]
+        ax = cx + (r_outer + 1) * math.cos(rad)
+        ay = cy + (r_outer + 1) * math.sin(rad)
+        color = [C["accent"], C["accent2"], C["purple"], C["pink"]][i]
         dot = ET.SubElement(svg, "circle", {
             "cx": str(ax), "cy": str(ay), "r": "3", "fill": color
         })
         ET.SubElement(dot, "animate", {
-            "attributeName": "r", "values": "3;4;3",
+            "attributeName": "r", "values": "2.5;4;2.5",
+            "dur": "2s", "repeatCount": "indefinite"
+        })
+        ET.SubElement(dot, "animate", {
+            "attributeName": "opacity", "values": "0.6;1;0.6",
             "dur": "2s", "repeatCount": "indefinite"
         })
 

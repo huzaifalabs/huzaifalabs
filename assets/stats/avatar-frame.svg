@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 140 140" role="img" aria-label="Avatar frame">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="150" viewBox="0 0 150 150" role="img" aria-label="Avatar">
   <defs>
     <linearGradient id="frameGrad" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" stop-color="#00f5a0"/>
@@ -7,22 +7,33 @@
       <stop offset="66%" stop-color="#a855f7"/>
       <stop offset="100%" stop-color="#00f5a0"/>
     </linearGradient>
+    <clipPath id="avatarClip">
+      <circle cx="75" cy="75" r="60"/>
+    </clipPath>
   </defs>
-  <circle cx="70" cy="70" r="74" fill="none" stroke="#00f5a0" stroke-width="1" opacity="0.15"/>
-  <circle cx="70" cy="70" r="68" fill="none" stroke="url(#frameGrad)" stroke-width="3" stroke-linecap="round" stroke-dasharray="128.17698026646357 299.0796206217483">
-    <animate attributeName="stroke-dashoffset" values="0;213.62830044410595;427.2566008882119" dur="6s" repeatCount="indefinite"/>
+  <circle cx="75" cy="75" r="77" fill="none" stroke="#00f5a0" stroke-width="1" opacity="0.12"/>
+  <circle cx="75" cy="75" r="72" fill="none" stroke="url(#frameGrad)" stroke-width="3" stroke-linecap="round" stroke-dasharray="113.09733552923255 339.29200658769764">
+    <animate attributeName="stroke-dashoffset" values="0;-452.3893421169302" dur="4s" repeatCount="indefinite"/>
   </circle>
-  <circle cx="70" cy="70" r="58" fill="none" stroke="#2a2a3e" stroke-width="1.5"/>
-  <circle cx="137.0" cy="70.0" r="3" fill="#00f5a0">
-    <animate attributeName="r" values="3;4;3" dur="2s" repeatCount="indefinite"/>
+  <circle cx="75" cy="75" r="75" fill="none" stroke="#00d9f5" stroke-width="1" stroke-linecap="round" opacity="0.3" stroke-dasharray="67.85840131753953 384.5309407993907">
+    <animate attributeName="stroke-dashoffset" values="0;452.3893421169302" dur="6s" repeatCount="indefinite"/>
   </circle>
-  <circle cx="70.0" cy="137.0" r="3" fill="#00d9f5">
-    <animate attributeName="r" values="3;4;3" dur="2s" repeatCount="indefinite"/>
+  <circle cx="75" cy="75" r="62" fill="none" stroke="#2a2a3e" stroke-width="1.5"/>
+  <image xlink:href="https://github.com/huzaifalabs.png" x="15" y="15" width="120" height="120" clip-path="url(#avatarClip)" preserveAspectRatio="xMidYMid slice"/>
+  <circle cx="148.0" cy="75.0" r="3" fill="#00f5a0">
+    <animate attributeName="r" values="2.5;4;2.5" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
   </circle>
-  <circle cx="3.0" cy="70.00000000000001" r="3" fill="#a855f7">
-    <animate attributeName="r" values="3;4;3" dur="2s" repeatCount="indefinite"/>
+  <circle cx="75.0" cy="148.0" r="3" fill="#00d9f5">
+    <animate attributeName="r" values="2.5;4;2.5" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
   </circle>
-  <circle cx="69.99999999999999" cy="3.0" r="3" fill="#f472b6">
-    <animate attributeName="r" values="3;4;3" dur="2s" repeatCount="indefinite"/>
+  <circle cx="2.0" cy="75.00000000000001" r="3" fill="#a855f7">
+    <animate attributeName="r" values="2.5;4;2.5" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="74.99999999999999" cy="2.0" r="3" fill="#f472b6">
+    <animate attributeName="r" values="2.5;4;2.5" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
   </circle>
 </svg>
