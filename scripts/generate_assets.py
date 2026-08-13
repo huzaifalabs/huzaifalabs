@@ -45,8 +45,8 @@ C = {
     "green_dot":    "#28c840",
 }
 
-FF = "'-apple-system',BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif"
-FF_MONO = "'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace"
+FF = "sans-serif"
+FF_MONO = "Consolas,monospace"
 
 LANG_COLORS = {
     "Python":     "#3572A5", "JavaScript": "#f1e05a", "TypeScript": "#3178C6",
@@ -706,6 +706,71 @@ def gen_wave(out):
     print(f"  [+] {out}")
 
 
+# ── Avatar Frame ────────────────────────────────────────────
+def gen_avatar_frame(config, out):
+    """Animated gradient ring frame for avatar."""
+    size = 140
+    cx, cy = size // 2, size // 2
+    r_outer = 68
+    r_inner = 58
+
+    svg = ET.Element("svg", {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": str(size), "height": str(size),
+        "viewBox": f"0 0 {size} {size}",
+        "role": "img", "aria-label": "Avatar frame",
+    })
+
+    defs = ET.SubElement(svg, "defs")
+    add_gradient(defs, "frameGrad", [C["accent"], C["accent2"], C["purple"], C["accent"]])
+
+    # Outer glow circle
+    ET.SubElement(svg, "circle", {
+        "cx": str(cx), "cy": str(cy), "r": str(r_outer + 6),
+        "fill": "none", "stroke": C["accent"], "stroke-width": "1",
+        "opacity": "0.15"
+    })
+
+    # Main gradient ring (rotating via stroke-dasharray animation)
+    ring = ET.SubElement(svg, "circle", {
+        "cx": str(cx), "cy": str(cy), "r": str(r_outer),
+        "fill": "none", "stroke": "url(#frameGrad)",
+        "stroke-width": "3", "stroke-linecap": "round",
+    })
+    # Dash animation for rotating effect
+    circumference = 2 * math.pi * r_outer
+    ET.SubElement(ring, "animate", {
+        "attributeName": "stroke-dashoffset",
+        "values": f"0;{circumference / 2};{circumference}",
+        "dur": "6s", "repeatCount": "indefinite"
+    })
+    ring.set("stroke-dasharray", f"{circumference * 0.3} {circumference * 0.7}")
+
+    # Inner solid ring
+    ET.SubElement(svg, "circle", {
+        "cx": str(cx), "cy": str(cy), "r": str(r_inner),
+        "fill": "none", "stroke": C["border"], "stroke-width": "1.5"
+    })
+
+    # Corner accents (4 small dots at cardinal points on the ring)
+    for angle_deg in [0, 90, 180, 270]:
+        rad = math.radians(angle_deg)
+        ax = cx + (r_outer - 1) * math.cos(rad)
+        ay = cy + (r_outer - 1) * math.sin(rad)
+        color = [C["accent"], C["accent2"], C["purple"], C["pink"]][angle_deg // 90]
+        dot = ET.SubElement(svg, "circle", {
+            "cx": str(ax), "cy": str(ay), "r": "3", "fill": color
+        })
+        ET.SubElement(dot, "animate", {
+            "attributeName": "r", "values": "3;4;3",
+            "dur": "2s", "repeatCount": "indefinite"
+        })
+
+    with open(out, "w") as f:
+        f.write(svg_str(svg))
+    print(f"  [+] {out}")
+
+
 # ── Main ─────────────────────────────────────────────────────
 def main():
     base = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -723,6 +788,7 @@ def main():
             data = json.load(f)
 
     print("[*] Generating SVG assets (GitHub-safe Neon Dark v2)...")
+    gen_avatar_frame(config, os.path.join(assets_dir, "avatar-frame.svg"))
     gen_banner(config, os.path.join(assets_dir, "banner.svg"))
     gen_typing(config, os.path.join(assets_dir, "typing-card.svg"))
     gen_terminal(config, os.path.join(assets_dir, "terminal-card.svg"))

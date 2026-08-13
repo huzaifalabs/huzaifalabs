@@ -6,60 +6,60 @@
       <stop offset="100%" stop-color="#00d9f5"/>
     </linearGradient>
   </defs>
-  <text x="273" y="28" fill="#8888aa" font-size="11" font-weight="700" text-anchor="middle" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">TECH STACK</text>
+  <text x="273" y="28" fill="#8888aa" font-size="11" font-weight="700" text-anchor="middle" font-family="Consolas,monospace">TECH STACK</text>
   <rect x="228" y="34" width="90" height="2" rx="1" fill="url(#skillGrad)" opacity="0.6"/>
   <rect x="20" y="50" width="95" height="28" rx="14" fill="#1a1a2e" stroke="#3572A5" stroke-width="1"/>
   <circle cx="34" cy="64" r="4" fill="#3572A5"/>
-  <text x="44" y="68" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">Python</text>
+  <text x="44" y="68" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="Consolas,monospace">Python</text>
   <rect x="123" y="50" width="95" height="28" rx="14" fill="#1a1a2e" stroke="#f1e05a" stroke-width="1"/>
   <circle cx="137" cy="64" r="4" fill="#f1e05a"/>
-  <text x="147" y="68" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">JavaScript</text>
+  <text x="147" y="68" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="Consolas,monospace">JavaScript</text>
   <rect x="226" y="50" width="95" height="28" rx="14" fill="#1a1a2e" stroke="#3178C6" stroke-width="1"/>
   <circle cx="240" cy="64" r="4" fill="#3178C6"/>
-  <text x="250" y="68" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">TypeScript</text>
+  <text x="250" y="68" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="Consolas,monospace">TypeScript</text>
   <rect x="329" y="50" width="95" height="28" rx="14" fill="#1a1a2e" stroke="#E34F26" stroke-width="1"/>
   <circle cx="343" cy="64" r="4" fill="#E34F26"/>
-  <text x="353" y="68" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">HTML5</text>
+  <text x="353" y="68" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="Consolas,monospace">HTML5</text>
   <rect x="432" y="50" width="95" height="28" rx="14" fill="#1a1a2e" stroke="#1572B6" stroke-width="1"/>
   <circle cx="446" cy="64" r="4" fill="#1572B6"/>
-  <text x="456" y="68" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">CSS3</text>
+  <text x="456" y="68" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="Consolas,monospace">CSS3</text>
   <rect x="20" y="86" width="95" height="28" rx="14" fill="#1a1a2e" stroke="#61DAFB" stroke-width="1"/>
   <circle cx="34" cy="100" r="4" fill="#61DAFB"/>
-  <text x="44" y="104" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">React</text>
+  <text x="44" y="104" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="Consolas,monospace">React</text>
   <rect x="123" y="86" width="95" height="28" rx="14" fill="#1a1a2e" stroke="#ffffff" stroke-width="1"/>
   <circle cx="137" cy="100" r="4" fill="#ffffff"/>
-  <text x="147" y="104" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">Next.js</text>
+  <text x="147" y="104" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="Consolas,monospace">Next.js</text>
   <rect x="226" y="86" width="95" height="28" rx="14" fill="#1a1a2e" stroke="#339933" stroke-width="1"/>
   <circle cx="240" cy="100" r="4" fill="#339933"/>
-  <text x="250" y="104" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">Node.js</text>
+  <text x="250" y="104" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="Consolas,monospace">Node.js</text>
   <rect x="329" y="86" width="95" height="28" rx="14" fill="#1a1a2e" stroke="#888888" stroke-width="1"/>
   <circle cx="343" cy="100" r="4" fill="#888888"/>
-  <text x="353" y="104" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">Express</text>
+  <text x="353" y="104" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="Consolas,monospace">Express</text>
   <rect x="432" y="86" width="95" height="28" rx="14" fill="#1a1a2e" stroke="#009688" stroke-width="1"/>
   <circle cx="446" cy="100" r="4" fill="#009688"/>
-  <text x="456" y="104" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">FastAPI</text>
+  <text x="456" y="104" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="Consolas,monospace">FastAPI</text>
   <rect x="20" y="122" width="95" height="28" rx="14" fill="#1a1a2e" stroke="#4169E1" stroke-width="1"/>
   <circle cx="34" cy="136" r="4" fill="#4169E1"/>
-  <text x="44" y="140" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">PostgreSQL</text>
+  <text x="44" y="140" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="Consolas,monospace">PostgreSQL</text>
   <rect x="123" y="122" width="95" height="28" rx="14" fill="#1a1a2e" stroke="#47A248" stroke-width="1"/>
   <circle cx="137" cy="136" r="4" fill="#47A248"/>
-  <text x="147" y="140" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">MongoDB</text>
+  <text x="147" y="140" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="Consolas,monospace">MongoDB</text>
   <rect x="226" y="122" width="95" height="28" rx="14" fill="#1a1a2e" stroke="#003B57" stroke-width="1"/>
   <circle cx="240" cy="136" r="4" fill="#003B57"/>
-  <text x="250" y="140" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">SQLite</text>
+  <text x="250" y="140" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="Consolas,monospace">SQLite</text>
   <rect x="329" y="122" width="95" height="28" rx="14" fill="#1a1a2e" stroke="#F05032" stroke-width="1"/>
   <circle cx="343" cy="136" r="4" fill="#F05032"/>
-  <text x="353" y="140" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">Git</text>
+  <text x="353" y="140" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="Consolas,monospace">Git</text>
   <rect x="432" y="122" width="95" height="28" rx="14" fill="#1a1a2e" stroke="#888888" stroke-width="1"/>
   <circle cx="446" cy="136" r="4" fill="#888888"/>
-  <text x="456" y="140" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">GitHub</text>
+  <text x="456" y="140" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="Consolas,monospace">GitHub</text>
   <rect x="20" y="158" width="95" height="28" rx="14" fill="#1a1a2e" stroke="#007ACC" stroke-width="1"/>
   <circle cx="34" cy="172" r="4" fill="#007ACC"/>
-  <text x="44" y="176" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">VS Code</text>
+  <text x="44" y="176" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="Consolas,monospace">VS Code</text>
   <rect x="123" y="158" width="95" height="28" rx="14" fill="#1a1a2e" stroke="#FCC624" stroke-width="1"/>
   <circle cx="137" cy="172" r="4" fill="#FCC624"/>
-  <text x="147" y="176" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">Linux</text>
+  <text x="147" y="176" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="Consolas,monospace">Linux</text>
   <rect x="226" y="158" width="95" height="28" rx="14" fill="#1a1a2e" stroke="#2496ED" stroke-width="1"/>
   <circle cx="240" cy="172" r="4" fill="#2496ED"/>
-  <text x="250" y="176" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">Docker</text>
+  <text x="250" y="176" fill="#eaeaff" font-size="10" font-weight="500" text-anchor="start" font-family="Consolas,monospace">Docker</text>
 </svg>

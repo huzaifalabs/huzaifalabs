@@ -13,22 +13,22 @@
   <circle cx="22" cy="18" r="6" fill="#ff5f57"/>
   <circle cx="44" cy="18" r="6" fill="#febc2e"/>
   <circle cx="66" cy="18" r="6" fill="#28c840"/>
-  <text x="290" y="23" fill="#555577" font-size="11" font-weight="500" text-anchor="middle" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">~/huzaifa</text>
+  <text x="290" y="23" fill="#555577" font-size="11" font-weight="500" text-anchor="middle" font-family="Consolas,monospace">~/huzaifa</text>
   <rect x="15" y="40" width="98" height="26" rx="4" fill="#00f5a0" opacity="0.1"/>
-  <text x="20" y="56" fill="#00f5a0" font-size="13" font-weight="600" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">$ whoami</text>
-  <text x="30" y="86" fill="#555577" font-size="12" font-weight="400" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">name:</text>
-  <text x="81.6" y="86" fill="#eaeaff" font-size="12" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">Huzaifa</text>
-  <text x="30" y="110" fill="#555577" font-size="12" font-weight="400" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">role:</text>
-  <text x="81.6" y="110" fill="#00f5a0" font-size="12" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">Full-Stack Developer</text>
-  <text x="30" y="134" fill="#555577" font-size="12" font-weight="400" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">langs:</text>
-  <text x="90.0" y="134" fill="#00d9f5" font-size="12" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">Python, JavaScript, TypeScript</text>
-  <text x="30" y="158" fill="#555577" font-size="12" font-weight="400" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">building:</text>
-  <text x="115.2" y="158" fill="#8888aa" font-size="12" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">Full-stack web applications, Open-source tools</text>
-  <text x="30" y="182" fill="#555577" font-size="12" font-weight="400" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">learning:</text>
-  <text x="115.2" y="182" fill="#8888aa" font-size="12" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">System design, Cloud architecture</text>
-  <text x="30" y="206" fill="#555577" font-size="12" font-weight="400" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">exploring:</text>
-  <text x="123.60000000000001" y="206" fill="#8888aa" font-size="12" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">AI/ML integration, DevOps practices</text>
-  <text x="20" y="234" fill="#00f5a0" font-size="13" font-weight="600" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">$ </text>
+  <text x="20" y="56" fill="#00f5a0" font-size="13" font-weight="600" text-anchor="start" font-family="Consolas,monospace">$ whoami</text>
+  <text x="30" y="86" fill="#555577" font-size="12" font-weight="400" text-anchor="start" font-family="Consolas,monospace">name:</text>
+  <text x="81.6" y="86" fill="#eaeaff" font-size="12" font-weight="500" text-anchor="start" font-family="Consolas,monospace">Huzaifa</text>
+  <text x="30" y="110" fill="#555577" font-size="12" font-weight="400" text-anchor="start" font-family="Consolas,monospace">role:</text>
+  <text x="81.6" y="110" fill="#00f5a0" font-size="12" font-weight="500" text-anchor="start" font-family="Consolas,monospace">Full-Stack Developer</text>
+  <text x="30" y="134" fill="#555577" font-size="12" font-weight="400" text-anchor="start" font-family="Consolas,monospace">langs:</text>
+  <text x="90.0" y="134" fill="#00d9f5" font-size="12" font-weight="500" text-anchor="start" font-family="Consolas,monospace">Python, JavaScript, TypeScript</text>
+  <text x="30" y="158" fill="#555577" font-size="12" font-weight="400" text-anchor="start" font-family="Consolas,monospace">building:</text>
+  <text x="115.2" y="158" fill="#8888aa" font-size="12" font-weight="500" text-anchor="start" font-family="Consolas,monospace">Full-stack web applications, Open-source tools</text>
+  <text x="30" y="182" fill="#555577" font-size="12" font-weight="400" text-anchor="start" font-family="Consolas,monospace">learning:</text>
+  <text x="115.2" y="182" fill="#8888aa" font-size="12" font-weight="500" text-anchor="start" font-family="Consolas,monospace">System design, Cloud architecture</text>
+  <text x="30" y="206" fill="#555577" font-size="12" font-weight="400" text-anchor="start" font-family="Consolas,monospace">exploring:</text>
+  <text x="123.60000000000001" y="206" fill="#8888aa" font-size="12" font-weight="500" text-anchor="start" font-family="Consolas,monospace">AI/ML integration, DevOps practices</text>
+  <text x="20" y="234" fill="#00f5a0" font-size="13" font-weight="600" text-anchor="start" font-family="Consolas,monospace">$ </text>
   <rect x="34" y="217" width="18" height="26" rx="4" fill="#00f5a0" opacity="0.2"/>
   <rect x="40" y="221" width="8" height="16" rx="1" fill="#00f5a0">
     <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>

@@ -2,11 +2,12 @@
 
 <img src="assets/stats/banner.svg" width="100%" alt="Huzaifa - Full-Stack Developer" />
 
+<img src="assets/stats/avatar-frame.svg" width="140" height="140" style="margin-top:-60px;display:block;margin-left:auto;margin-right:auto;" alt="" />
 <a href="https://github.com/huzaifalabs">
-  <img src="https://github.com/huzaifalabs.png" width="120" height="120" style="border-radius:50%;border:3px solid #00f5a0;margin-top:-60px;position:relative;z-index:1;background:#0a0a0f;" alt="Huzaifa's avatar" />
+  <img src="https://github.com/huzaifalabs.png" width="110" height="110" style="border-radius:50%;margin-top:-128px;display:block;margin-left:auto;margin-right:auto;position:relative;z-index:1;background:#0a0a0f;" alt="Huzaifa's avatar" />
 </a>
 
-<br/>
+<br clear="all"/>
 
 <img src="assets/stats/typing-card.svg" alt="Full-Stack Developer" />
 

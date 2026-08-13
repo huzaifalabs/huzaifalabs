@@ -88,11 +88,12 @@ def build_hero(config: dict) -> str:
 
 <img src="assets/stats/banner.svg" width="100%" alt="{name} - {headline}" />
 
+<img src="assets/stats/avatar-frame.svg" width="140" height="140" style="margin-top:-60px;display:block;margin-left:auto;margin-right:auto;" alt="" />
 <a href="https://github.com/{username}">
-  <img src="{avatar}" width="120" height="120" style="border-radius:50%;border:3px solid {accent};margin-top:-60px;position:relative;z-index:1;background:{config['design']['colors']['bg']};" alt="{name}'s avatar" />
+  <img src="{avatar}" width="110" height="110" style="border-radius:50%;margin-top:-128px;display:block;margin-left:auto;margin-right:auto;position:relative;z-index:1;background:{config['design']['colors']['bg']};" alt="{name}'s avatar" />
 </a>
 
-<br/>
+<br clear="all"/>
 
 <img src="assets/stats/typing-card.svg" alt="{headline}" />
 

@@ -13,19 +13,19 @@
     <set attributeName="opacity" to="0"/>
     <set attributeName="opacity" to="1" begin="0.0s"/>
     <set attributeName="opacity" to="0" begin="3.0s"/>
-    <text x="34" y="28" fill="#eaeaff" font-size="13" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">Full-Stack Developer</text>
+    <text x="34" y="28" fill="#eaeaff" font-size="13" font-weight="500" text-anchor="start" font-family="Consolas,monospace">Full-Stack Developer</text>
   </g>
   <g>
     <set attributeName="opacity" to="0"/>
     <set attributeName="opacity" to="1" begin="3.5s"/>
     <set attributeName="opacity" to="0" begin="6.5s"/>
-    <text x="34" y="28" fill="#eaeaff" font-size="13" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">Open Source Contributor</text>
+    <text x="34" y="28" fill="#eaeaff" font-size="13" font-weight="500" text-anchor="start" font-family="Consolas,monospace">Open Source Contributor</text>
   </g>
   <g>
     <set attributeName="opacity" to="0"/>
     <set attributeName="opacity" to="1" begin="7.0s"/>
     <set attributeName="opacity" to="0" begin="10.0s"/>
-    <text x="34" y="28" fill="#eaeaff" font-size="13" font-weight="500" text-anchor="start" font-family="'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace">Python &amp; JavaScript</text>
+    <text x="34" y="28" fill="#eaeaff" font-size="13" font-weight="500" text-anchor="start" font-family="Consolas,monospace">Python &amp; JavaScript</text>
   </g>
   <rect x="214.39999999999998" y="8" width="14" height="28" rx="4" fill="#00f5a0" opacity="0.3"/>
   <rect x="220.39999999999998" y="13" width="2" height="18" rx="1" fill="#00f5a0">

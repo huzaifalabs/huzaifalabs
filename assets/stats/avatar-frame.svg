@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 140 140" role="img" aria-label="Avatar frame">
+  <defs>
+    <linearGradient id="frameGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f5a0"/>
+      <stop offset="33%" stop-color="#00d9f5"/>
+      <stop offset="66%" stop-color="#a855f7"/>
+      <stop offset="100%" stop-color="#00f5a0"/>
+    </linearGradient>
+  </defs>
+  <circle cx="70" cy="70" r="74" fill="none" stroke="#00f5a0" stroke-width="1" opacity="0.15"/>
+  <circle cx="70" cy="70" r="68" fill="none" stroke="url(#frameGrad)" stroke-width="3" stroke-linecap="round" stroke-dasharray="128.17698026646357 299.0796206217483">
+    <animate attributeName="stroke-dashoffset" values="0;213.62830044410595;427.2566008882119" dur="6s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="70" cy="70" r="58" fill="none" stroke="#2a2a3e" stroke-width="1.5"/>
+  <circle cx="137.0" cy="70.0" r="3" fill="#00f5a0">
+    <animate attributeName="r" values="3;4;3" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="70.0" cy="137.0" r="3" fill="#00d9f5">
+    <animate attributeName="r" values="3;4;3" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="3.0" cy="70.00000000000001" r="3" fill="#a855f7">
+    <animate attributeName="r" values="3;4;3" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="69.99999999999999" cy="3.0" r="3" fill="#f472b6">
+    <animate attributeName="r" values="3;4;3" dur="2s" repeatCount="indefinite"/>
+  </circle>
+</svg>
