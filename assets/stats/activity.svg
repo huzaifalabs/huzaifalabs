@@ -11,42 +11,42 @@
   <rect x="24" y="38" width="120" height="2" rx="1" fill="#00f5a0" opacity="0.4"/>
   <rect x="53" y="121" width="34" height="10" rx="9" fill="#00f5a0" opacity="0.08"/>
   <rect x="56" y="124" width="28" height="4" rx="6" fill="url(#barGrad)"/>
-  <text x="70" y="146" fill="#555577" font-size="8" font-weight="400" text-anchor="middle" font-family="sans-serif">Jun 06</text>
+  <text x="70" y="146" fill="#555577" font-size="8" font-weight="400" text-anchor="middle" font-family="sans-serif">Jun 07</text>
   <rect x="93" y="121" width="34" height="10" rx="9" fill="#00f5a0" opacity="0.08"/>
   <rect x="96" y="124" width="28" height="4" rx="6" fill="url(#barGrad)"/>
-  <text x="110" y="146" fill="#555577" font-size="8" font-weight="400" text-anchor="middle" font-family="sans-serif">Jun 13</text>
+  <text x="110" y="146" fill="#555577" font-size="8" font-weight="400" text-anchor="middle" font-family="sans-serif">Jun 14</text>
   <rect x="133" y="121" width="34" height="10" rx="9" fill="#00f5a0" opacity="0.08"/>
   <rect x="136" y="124" width="28" height="4" rx="6" fill="url(#barGrad)"/>
-  <text x="150" y="146" fill="#555577" font-size="8" font-weight="400" text-anchor="middle" font-family="sans-serif">Jun 20</text>
+  <text x="150" y="146" fill="#555577" font-size="8" font-weight="400" text-anchor="middle" font-family="sans-serif">Jun 21</text>
   <rect x="173" y="121" width="34" height="10" rx="9" fill="#00f5a0" opacity="0.08"/>
   <rect x="176" y="124" width="28" height="4" rx="6" fill="url(#barGrad)"/>
-  <text x="190" y="146" fill="#555577" font-size="8" font-weight="400" text-anchor="middle" font-family="sans-serif">Jun 27</text>
+  <text x="190" y="146" fill="#555577" font-size="8" font-weight="400" text-anchor="middle" font-family="sans-serif">Jun 28</text>
   <rect x="213" y="121" width="34" height="10" rx="9" fill="#00f5a0" opacity="0.08"/>
   <rect x="216" y="124" width="28" height="4" rx="6" fill="url(#barGrad)"/>
-  <text x="230" y="146" fill="#555577" font-size="8" font-weight="400" text-anchor="middle" font-family="sans-serif">Jul 04</text>
+  <text x="230" y="146" fill="#555577" font-size="8" font-weight="400" text-anchor="middle" font-family="sans-serif">Jul 05</text>
   <rect x="253" y="121" width="34" height="10" rx="9" fill="#00f5a0" opacity="0.08"/>
   <rect x="256" y="124" width="28" height="4" rx="6" fill="url(#barGrad)"/>
-  <text x="270" y="146" fill="#555577" font-size="8" font-weight="400" text-anchor="middle" font-family="sans-serif">Jul 11</text>
+  <text x="270" y="146" fill="#555577" font-size="8" font-weight="400" text-anchor="middle" font-family="sans-serif">Jul 12</text>
   <rect x="293" y="121" width="34" height="10" rx="9" fill="#00f5a0" opacity="0.08"/>
   <rect x="296" y="124" width="28" height="4" rx="6" fill="url(#barGrad)"/>
-  <text x="310" y="146" fill="#555577" font-size="8" font-weight="400" text-anchor="middle" font-family="sans-serif">Jul 18</text>
+  <text x="310" y="146" fill="#555577" font-size="8" font-weight="400" text-anchor="middle" font-family="sans-serif">Jul 19</text>
   <rect x="333" y="121" width="34" height="10" rx="9" fill="#00f5a0" opacity="0.08"/>
   <rect x="336" y="124" width="28" height="4" rx="6" fill="url(#barGrad)"/>
-  <text x="350" y="146" fill="#555577" font-size="8" font-weight="400" text-anchor="middle" font-family="sans-serif">Jul 25</text>
+  <text x="350" y="146" fill="#555577" font-size="8" font-weight="400" text-anchor="middle" font-family="sans-serif">Jul 26</text>
   <rect x="373" y="121" width="34" height="10" rx="9" fill="#00f5a0" opacity="0.08"/>
   <rect x="376" y="124" width="28" height="4" rx="6" fill="url(#barGrad)"/>
-  <text x="390" y="146" fill="#555577" font-size="8" font-weight="400" text-anchor="middle" font-family="sans-serif">Aug 01</text>
+  <text x="390" y="146" fill="#555577" font-size="8" font-weight="400" text-anchor="middle" font-family="sans-serif">Aug 02</text>
   <rect x="413" y="45.0" width="34" height="86.0" rx="9" fill="#00f5a0" opacity="0.08"/>
   <rect x="416" y="48.0" width="28" height="80.0" rx="6" fill="url(#barGrad)"/>
   <rect x="416" y="48.0" width="28" height="80.0" rx="6" fill="white" opacity="0">
     <animate attributeName="opacity" values="0;0.1;0" dur="3.8s" repeatCount="indefinite"/>
   </rect>
   <text x="430" y="42.0" fill="#00d9f5" font-size="9" font-weight="700" text-anchor="middle" font-family="Consolas,monospace">7</text>
-  <text x="430" y="146" fill="#555577" font-size="8" font-weight="400" text-anchor="middle" font-family="sans-serif">Aug 08</text>
+  <text x="430" y="146" fill="#555577" font-size="8" font-weight="400" text-anchor="middle" font-family="sans-serif">Aug 09</text>
   <rect x="453" y="121" width="34" height="10" rx="9" fill="#00f5a0" opacity="0.08"/>
   <rect x="456" y="124" width="28" height="4" rx="6" fill="url(#barGrad)"/>
-  <text x="470" y="146" fill="#555577" font-size="8" font-weight="400" text-anchor="middle" font-family="sans-serif">Aug 15</text>
+  <text x="470" y="146" fill="#555577" font-size="8" font-weight="400" text-anchor="middle" font-family="sans-serif">Aug 16</text>
   <rect x="493" y="121" width="34" height="10" rx="9" fill="#00f5a0" opacity="0.08"/>
   <rect x="496" y="124" width="28" height="4" rx="6" fill="url(#barGrad)"/>
-  <text x="510" y="146" fill="#555577" font-size="8" font-weight="400" text-anchor="middle" font-family="sans-serif">Aug 22</text>
+  <text x="510" y="146" fill="#555577" font-size="8" font-weight="400" text-anchor="middle" font-family="sans-serif">Aug 23</text>
 </svg>
